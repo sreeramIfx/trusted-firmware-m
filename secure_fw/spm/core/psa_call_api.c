@@ -38,6 +38,8 @@ psa_status_t spm_associate_call_params(struct connection_t *p_connection,
 
     p_connection->msg.type = type;
 
+    p_connection->ctrl_param = ctrl_param;
+
     if (!PARAM_HAS_IOVEC(ctrl_param)) {
         return PSA_SUCCESS;
     }

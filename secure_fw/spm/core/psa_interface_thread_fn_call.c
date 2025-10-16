@@ -232,6 +232,14 @@ psa_status_t agent_psa_close_thread_fn_call(psa_handle_t handle, int32_t ns_clie
 #endif /* CONFIG_TFM_CONNECTION_BASED_SERVICE_API == 1 */
 #endif /* TFM_PARTITION_NS_AGENT_MAILBOX */
 
+#if CONFIG_TFM_VECTOR_ACCESS == 1
+__naked
+psa_status_t original_iovec_thread_fn_call(psa_handle_t msg_handle, tfm_original_iovec_t *io_vec)
+{
+    TFM_THREAD_FN_CALL_ENTRY(tfm_spm_partition_original_iovec);
+}
+#endif /* CONFIG_TFM_VECTOR_ACCESS == 1 */
+
 const struct psa_api_tbl_t psa_api_thread_fn_call = {
                                 tfm_psa_call_pack_thread_fn_call,
                                 psa_version_thread_fn_call,
@@ -276,4 +284,7 @@ const struct psa_api_tbl_t psa_api_thread_fn_call = {
                                 agent_psa_close_thread_fn_call,
 #endif /* CONFIG_TFM_CONNECTION_BASED_SERVICE_API == 1 */
 #endif /* TFM_PARTITION_NS_AGENT_MAILBOX */
+#if CONFIG_TFM_VECTOR_ACCESS == 1
+                                original_iovec_thread_fn_call,
+#endif /* CONFIG_TFM_VECTOR_ACCESS == 1 */
                             };

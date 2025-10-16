@@ -183,3 +183,10 @@ psa_status_t agent_psa_close(psa_handle_t handle, int32_t ns_client_id)
 }
 #endif /* CONFIG_TFM_CONNECTION_BASED_SERVICE_API == 1 */
 #endif /* TFM_PARTITION_NS_AGENT_MAILBOX */
+
+#if CONFIG_TFM_VECTOR_ACCESS == 1
+psa_status_t original_iovec(psa_handle_t msg_handle, tfm_original_iovec_t *io_vec)
+{
+    return PART_METADATA()->psa_fns->original_iovec(msg_handle, io_vec);
+}
+#endif /* CONFIG_TFM_VECTOR_ACCESS == 1 */

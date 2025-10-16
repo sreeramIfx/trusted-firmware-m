@@ -80,6 +80,7 @@ struct connection_t {
     struct partition_t *p_client;            /* Caller partition               */
     const struct service_t *service;         /* RoT service pointer            */
     psa_msg_t msg;                           /* PSA message body               */
+    uint32_t ctrl_param;                     /* Control parameter for the call */
     const void *invec_base[PSA_MAX_IOVEC];   /* Base addresses of invec from client */
     size_t invec_accessed[PSA_MAX_IOVEC];    /* Size of data accessed by psa_read/skip */
     void *outvec_base[PSA_MAX_IOVEC];        /* Base addresses of outvec from client */

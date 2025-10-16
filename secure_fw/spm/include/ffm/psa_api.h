@@ -14,6 +14,9 @@
 #ifdef TFM_PARTITION_NS_AGENT_MAILBOX
 #include "ffm/mailbox_agent_api.h"
 #endif
+#if CONFIG_TFM_VECTOR_ACCESS == 1
+#include "ffm/original_vector_api.h"
+#endif
 #include "psa/client.h"
 #include "psa/service.h"
 
@@ -562,5 +565,14 @@ void tfm_spm_partition_psa_unmap_outvec(psa_handle_t msg_handle,
                                         uint32_t outvec_idx, size_t len);
 
 #endif /* PSA_FRAMEWORK_HAS_MM_IOVEC */
+
+#if CONFIG_TFM_VECTOR_ACCESS == 1
+/**
+ * \brief Retrieve original invec and outvec as passed to psa_call()
+ */
+psa_status_t tfm_spm_partition_original_iovec(psa_handle_t msg_handle, tfm_original_iovec_t *io_vec);
+#else
+#define tfm_spm_partition_original_iovec    NULL
+#endif /* CONFIG_TFM_VECTOR_ACCESS == 1 */
 
 #endif /* __PSA_API_H__ */

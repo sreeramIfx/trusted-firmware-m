@@ -187,6 +187,14 @@ __naked psa_status_t agent_psa_close_svc(psa_handle_t handle, int32_t ns_client_
 #endif /* CONFIG_TFM_CONNECTION_BASED_SERVICE_API == 1 */
 #endif /* TFM_PARTITION_NS_AGENT_MAILBOX */
 
+#if CONFIG_TFM_VECTOR_ACCESS == 1
+__naked psa_status_t original_iovec_svc(psa_handle_t msg_handle, tfm_original_iovec_t *io_vec)
+{
+    __asm volatile("svc     "M2S(TFM_SVC_ORIGINAL_IOVEC)"      \n"
+                   "bx      lr                                 \n");
+}
+#endif /* CONFIG_TFM_VECTOR_ACCESS == 1 */
+
 const struct psa_api_tbl_t psa_api_svc = {
                                 tfm_psa_call_pack_svc,
                                 psa_version_svc,
@@ -225,4 +233,7 @@ const struct psa_api_tbl_t psa_api_svc = {
                                 agent_psa_close_svc,
 #endif /* CONFIG_TFM_CONNECTION_BASED_SERVICE_API == 1 */
 #endif /* TFM_PARTITION_NS_AGENT_MAILBOX */
+#if CONFIG_TFM_VECTOR_ACCESS == 1
+                                original_iovec_svc,
+#endif /* CONFIG_TFM_VECTOR_ACCESS == 1 */
                             };

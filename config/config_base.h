@@ -346,6 +346,11 @@
 #define CONFIG_TFM_SECURE_THREAD_MASK_NS_INTERRUPT 0
 #endif
 
+/* Disable access to the original psa_call() vectors */
+#ifndef CONFIG_TFM_VECTOR_ACCESS
+#define CONFIG_TFM_VECTOR_ACCESS                0
+#endif
+
 /*
  * tfm_hal_post_partition_init_hook is called if this option is enabled.
  * It's called by SPM right before starting scheduler.
